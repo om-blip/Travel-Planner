@@ -3,7 +3,6 @@ from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from langchain_groq import ChatGroq 
 from langchain.tools import Tool
-from langchain.agents import AgentExecutor
 import os
 from dotenv import load_dotenv
 import requests
@@ -84,13 +83,6 @@ agent = initialize_agent(
     agent_kwargs={"system_message": system_prompt}
 )
 
-agent_executor = AgentExecutor(
-    agent=agent,
-    tools=[search_tool],
-    verbose=True,
-    handle_parsing_errors=True  # This enables retrying on parsing failures
-)
-
 # Streamlit chat interface
 st.title("AI Travel Planner")
 
@@ -109,7 +101,7 @@ if prompt := st.chat_input("Tell me about your travel plans!"):
 
     with st.chat_message("assistant"):
         with st.spinner("Planning your trip..."):
-            response = agent_executor.run(prompt)
+            response = agent.run(prompt)
             st.markdown(response)
     
     st.session_state.messages.append({"role": "assistant", "content": response})    
