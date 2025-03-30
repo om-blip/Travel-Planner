@@ -7,8 +7,8 @@ import os
 from dotenv import load_dotenv
 import requests
 
-GOOGLE_API_KEY = st.secrets("GOOGLE_API_KEY")
-SERPER_API_KEY = st.secrets("SERPER_API_KEY")
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
 # Gemini language model
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
