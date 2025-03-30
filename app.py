@@ -3,23 +3,19 @@ from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.tools import Tool
-import os
-from dotenv import load_dotenv
 import requests
 
-# Load environment variables from .env file
-load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-SERPER_API_KEY = os.getenv("SERPER_API_KEY")
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
-# Check if API keys are loaded
 if not GOOGLE_API_KEY or not SERPER_API_KEY:
-    raise ValueError("Missing GOOGLE_API_KEY or SERPER_API_KEY in .env file")
+    raise ValueError("Missing GOOGLE_API_KEY or SERPER_API_KEY in secrets")GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
-# Initialize the Gemini Flash language model
+# Gemini language model
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
 
-# Define the Serper search tool
+# Serper search tool
 def search(query):
     """Search using Serper API and return formatted results."""
     url = "https://google.serper.dev/search"
@@ -38,7 +34,7 @@ search_tool = Tool(
     description="Use this tool to search for activities and attractions based on the user's destination and preferences."
 )
 
-# Define the system prompt
+# system prompt
 system_prompt = """
 You are an AI travel planner designed to create personalized itineraries. Your goal is to gather details from the user, suggest activities based on their preferences, and generate a detailed day-by-day itinerary.
 
@@ -92,12 +88,10 @@ st.title("AI Travel Planner")
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display chat history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Handle user input
 if prompt := st.chat_input("Tell me about your travel plans!"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
