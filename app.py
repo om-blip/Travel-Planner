@@ -3,17 +3,15 @@ from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.tools import Tool
+import os
+from dotenv import load_dotenv
 import requests
 
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
+GOOGLE_API_KEY = st.secrets("GOOGLE_API_KEY")
+SERPER_API_KEY = st.secrets("SERPER_API_KEY")
 
-# Groq language model
-llm = ChatGroq(
-    model_name="mixtral-8x7b-32768",  # Groq-supported model
-    api_key=GROQ_API_KEY,
-    temperature=0.7,
-)
+# Gemini language model
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
 
 # Serper search tool
 def search(query):
@@ -87,6 +85,7 @@ st.title("AI Travel Planner")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
