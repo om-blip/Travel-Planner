@@ -5,11 +5,15 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.tools import Tool
 import requests
 
-GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
-# Gemini language model
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
+# Groq language model
+llm = ChatGroq(
+    model_name="mixtral-8x7b-32768",  # Groq-supported model
+    api_key=GROQ_API_KEY,
+    temperature=0.7,
+)
 
 # Serper search tool
 def search(query):
