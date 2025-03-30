@@ -1,7 +1,7 @@
 import streamlit as st
 from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq 
 from langchain.tools import Tool
 import os
 from dotenv import load_dotenv
