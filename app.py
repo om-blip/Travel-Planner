@@ -8,10 +8,6 @@ import requests
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
-if not GOOGLE_API_KEY or not SERPER_API_KEY:
-    raise ValueError("Missing GOOGLE_API_KEY or SERPER_API_KEY in secrets")GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
-
 # Gemini language model
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
 
