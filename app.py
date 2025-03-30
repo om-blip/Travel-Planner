@@ -7,11 +7,14 @@ import os
 from dotenv import load_dotenv
 import requests
 
-GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 SERPER_API_KEY = st.secrets["SERPER_API_KEY"]
 
-# Gemini language model
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
+# Groq model
+llm = ChatGroq(
+    model="deepseek-r1-distill-qwen-32b", 
+    api_key=GROQ_API_KEY
+)
 
 # Serper search tool
 def search(query):
@@ -51,7 +54,7 @@ Once you have all details, confirm them with the user, e.g., 'So, you’re plann
 
 After confirmation, use the search tool to find activities. Construct a query like 'top [preferences] activities in [destination]' or 'hidden gems in [destination]' if requested. Present 5-10 suggestions and ask for approval, e.g., 'Here are some activities: [list]. Do these sound good?'
 
-Incorporate additional details if provided (e.g., dietary preferences, walking tolerance, accommodation preferences) into suggestions and the itinerary.
+Incorporate additional details if provided like dietary preferences, walking tolerance, accommodation preferences into suggestions and the itinerary.
 
 For vague inputs like 'moderate budget,' assume mid-range and ask for clarification. For 'somewhere fun,' ask for destination or activity type.
 
